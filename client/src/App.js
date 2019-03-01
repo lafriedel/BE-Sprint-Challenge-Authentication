@@ -35,6 +35,11 @@ class App extends Component {
     this.props.history.push("/jokes");
   };
 
+  logout = e => {
+    localStorage.removeItem("token");
+    this.props.history.push("/login");
+  }
+
   register = e => {
     e.preventDefault();
     axios
@@ -70,7 +75,8 @@ class App extends Component {
           <nav>
             <NavLink to="/login">Log In</NavLink>&nbsp;
             <NavLink to="/register">Register</NavLink>&nbsp;
-            <NavLink to="/jokes">Jokes</NavLink>
+            <NavLink to="/jokes">Jokes</NavLink>&nbsp;
+            <a href="" onClick={e => this.logout(e)}>Log Out</a>
           </nav>
         </header>
         <main>
