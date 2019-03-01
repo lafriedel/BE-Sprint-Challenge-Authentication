@@ -10,7 +10,9 @@ import Jokes from "./components/Jokes";
 class App extends Component {
   state = {
     registered: false,
+    registerError: false,
     loggedIn: false,
+    loginError: false,
     user: {
       username: "",
       password: ""
@@ -28,16 +30,23 @@ class App extends Component {
           ...this.state,
           registered: false,
           loggedIn: true,
+          loginError: false,
+          registerError: false,
           user: {
             username: "",
             password: ""
           }
-        })
+        });
+        this.props.history.push("/jokes");
       })
       .catch(err => {
         console.log(err);
+        this.setState({
+          ...this.state,
+          loginError: true,
+          registered: false
+        })
       });
-    this.props.history.push("/jokes");
   };
 
   logout = e => {
@@ -55,16 +64,21 @@ class App extends Component {
           ...this.state,
           registered: true,
           loggedIn: false,
+          registerError: false,
           user: {
             username: "",
             password: ""
           }
-        })
+        });
+        this.props.history.push("/login");
       })
       .catch(err => {
         console.log(err);
+        this.setState({
+          ...this.state,
+          registerError: true
+        })
       });
-    this.props.history.push("/login");
   };
 
   handleInputChange = e => {
@@ -96,6 +110,7 @@ class App extends Component {
               <Login
                 {...props}
                 login={this.login}
+                loginError={this.state.loginError}
                 handleInputChange={this.handleInputChange}
                 user={this.state.user}
                 registered={this.state.registered}
@@ -109,6 +124,7 @@ class App extends Component {
               <Register
                 {...props}
                 register={this.register}
+                registerError={this.state.registerError}
                 handleInputChange={this.handleInputChange}
                 user={this.state.user}
               />

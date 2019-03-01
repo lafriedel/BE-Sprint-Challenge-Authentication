@@ -5,6 +5,7 @@ const Login = props => {
     <>
         <h1>Log In</h1>
         {props.registered && <p>Thank you for registering! Please log in.</p>}
+        {props.loginError && <p>Invalid credentials. Please try again.</p>}
       <form onSubmit={e => props.login(e)}>
         <input
           type="text"

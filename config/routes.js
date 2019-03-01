@@ -14,24 +14,30 @@ module.exports = server => {
 function register(req, res) {
   let user = req.body;
 
-  const hash = bcrypt.hashSync(user.password, 10);
-  user.password = hash;
+  if (!user.username || !user.password) {
+    res.status(400).json({message: "Please provide a username and password."})
+  } else {
+    const hash = bcrypt.hashSync(user.password, 10);
+    user.password = hash;
+  
+    db("users")
+      .insert(user)
+      .then(userId => {
+        const [id] = userId;
+        db("users")
+          .where("id", id)
+          .then(user => {
+            res.status(201).json(user);
+          });
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: "There was an error registering the user." });
+      });
+  }
 
-  db("users")
-    .insert(user)
-    .then(userId => {
-      const [id] = userId;
-      db("users")
-        .where("id", id)
-        .then(user => {
-          res.status(201).json(user);
-        });
-    })
-    .catch(err => {
-      res
-        .status(500)
-        .json({ error: "There was an error registering the user." });
-    });
+
 }
 
 function login(req, res) {
