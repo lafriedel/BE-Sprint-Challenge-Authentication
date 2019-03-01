@@ -29,9 +29,23 @@ Implement an User Authentication System in order to access the jokes from the Jo
 Demonstrate your understanding of this week's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
 
 1. What is the purpose of using _sessions_?
-1. What does bcrypt do to help us store passwords in a secure manner.
-1. What does bcrypt do to slow down attackers?
-1. What are the three parts of the JSON Web Token?
+
+Sessions store information about the client that requested the session on a server. For the purpose of authentication, it is used to persist auth information throughout all client requests until the session ends. This is possible because auth information is transmitted between the client and server via cookies.
+
+2. What does bcrypt do to help us store passwords in a secure manner.
+
+Bcrypt hashes passwords before saving them to a database. A hash is a long string of seemingly random characters that obscures the information being proteted by it. The hash is created by an algorithm that uses the password plus some additional parameters. Given the same password and parameters, the resulting hash will always be identical (so long as the same algorithm is used to create it).
+
+3. What does bcrypt do to slow down attackers?
+
+It doesn't fully prevent an attacker from obtaining the information, but it is very secure because after obtaining the hash (a feat in itself), the attacker also needs to know the algorithm used to create the hash, and how many rounds of hashing were used to generate the final hash.
+
+4. What are the three parts of the JSON Web Token?
+
+A JSON Web Token's three parts, denoted in the token by any string of characters separated by a period, are:
+* A header that contains the type of algorithm used to create the token, and the type of token ("jwt" in this case)
+* A payload that contains permissions and optional keys (like the token's lifespan, the subject of the token, etc)
+* A signature, which is a hash of the base64-encoded header + payload, plus a secret provided by the server.
 
 ## Project Set Up
 
