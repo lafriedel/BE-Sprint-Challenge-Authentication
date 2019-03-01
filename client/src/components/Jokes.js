@@ -18,6 +18,16 @@ class Jokes extends React.Component {
             })
             .catch(err => console.log(err))
     }
+
+    randomInt = (max) => {
+        return Math.floor(Math.random() * Math.floor(max))
+    }
+
+    randomJoke = e => {
+        e.preventDefault();
+        return this.randomInt(this.state.jokes.length+1);
+
+    }
     render() {
         return (
             <>
@@ -25,6 +35,8 @@ class Jokes extends React.Component {
                 {this.state.jokes.map(joke => {
                     return <div key={joke.id}><p>{joke.joke}</p></div>
                 })}
+                {/* {this.state.jokes.filter((joke, index) => joke[index] === joke[4])}
+                <button onClick={e => this.randomJoke(e)}>Get Dad Joke!</button> */}
             </>
         )
     }
