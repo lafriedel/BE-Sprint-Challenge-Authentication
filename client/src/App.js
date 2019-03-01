@@ -9,6 +9,8 @@ import Jokes from "./components/Jokes";
 
 class App extends Component {
   state = {
+    registered: false,
+    loggedIn: false,
     user: {
       username: "",
       password: ""
@@ -23,6 +25,9 @@ class App extends Component {
         console.log(res);
         localStorage.setItem("token", res.data.token);
         this.setState({
+          ...this.state,
+          registered: false,
+          loggedIn: true,
           user: {
             username: "",
             password: ""
@@ -47,6 +52,9 @@ class App extends Component {
       .then(res => {
         console.log(res);
         this.setState({
+          ...this.state,
+          registered: true,
+          loggedIn: false,
           user: {
             username: "",
             password: ""
@@ -61,6 +69,7 @@ class App extends Component {
 
   handleInputChange = e => {
     this.setState({
+      ...this.state,
       user: {
         ...this.state.user,
         [e.target.name]: e.target.value
@@ -89,6 +98,7 @@ class App extends Component {
                 login={this.login}
                 handleInputChange={this.handleInputChange}
                 user={this.state.user}
+                registered={this.state.registered}
               />
             )}
           />

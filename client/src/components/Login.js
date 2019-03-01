@@ -3,6 +3,8 @@ import React from "react";
 const Login = props => {
   return (
     <>
+        <h1>Log In</h1>
+        {props.registered && <p>Thank you for registering! Please log in.</p>}
       <form onSubmit={e => props.login(e)}>
         <input
           type="text"
